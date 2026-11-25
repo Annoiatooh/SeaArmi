@@ -17,9 +17,18 @@ jobs:
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
-          distribution: 'temurin'
+          java-version: "21"
+          distribution: "temurin"
           cache: maven
 
       - name: Build with Maven
-        run: mvn -B package --file AtlantisWeapons.jar_Decompiler.com/META-INF/maven/com.atlantisrp/AtlantisWeapons/pom.xml
+        run: |
+          mvn -B package \
+            --file AtlantisWeapons.jar_Decompiler.com/META-INF/maven/com.atlantisrp/AtlantisWeapons/pom.xml
+
+      - name: Upload JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: AtlantisWeapons
+          path: AtlantisWeapons.jar_Decompiler.com/META-INF/maven/com.atlantisrp/AtlantisWeapons/target/*.jar
+          if-no-files-found: error
